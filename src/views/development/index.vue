@@ -21,11 +21,11 @@
           <div class="earlyWarningNumberToday overflow">{{item.oldScore}}</div>
           <div class="timeUpdate overflow">{{item.newScore}}</div>
           <div class="dutyDirectorToday overflow">
-            <i class="el-icon-top" v-if="item.difference>0"></i>
-            <i class="el-icon-bottom" v-if="item.difference<0" style="color:red"></i>
+            <i class="el-icon-top" v-if="(item.newScore-item.oldScore)>0"></i>
+            <i class="el-icon-bottom" v-if="(item.newScore-item.oldScore)<0" style="color:red"></i>
             <span
-              :class="{redColor:item.difference<0}"
-            >{{item.difference.toString().replace('-','')}}</span>
+              :class="{redColor:(item.newScore-item.oldScore)<0}"
+            >{{(item.newScore-item.oldScore).toFixed(2).toString().replace('-','')}}</span>
           </div>
           <div class="numberOfEmployeesToday overflow">
             <i class="el-icon-top" v-if="item.average>0"></i>
@@ -37,7 +37,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import lineChart from '@/components/lineChart'
 import { thirdData } from '@/mock'
@@ -76,7 +76,7 @@ export default {
   }
 }
 </script>
- 
+
 <style lang="scss" scoped>
 .quality {
   padding: 30px;
