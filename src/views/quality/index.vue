@@ -1,7 +1,8 @@
 <template>
   <div class="quality">
     <div class="head">
-      <line-chart></line-chart>
+           <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
+
       <div class="average">
         <div class="one">
           <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高0.02">
@@ -39,13 +40,23 @@
           <div class="dutyDirectorToday">得分变化</div>
           <div class="numberOfEmployeesToday">与平均值相比</div>
         </div>
-        <div class="list-item" v-for="(item,index) in list" :key="index">
+        <div class="list-item" v-for="(item,index) in list" :key="index" :style="colorStyle(item)">
           <div class="department">{{item.category}}</div>
           <div class="earlyWarningMonthly overflow">{{item.name}}</div>
           <div class="earlyWarningNumberToday overflow">{{item.oldScore}}</div>
           <div class="timeUpdate overflow">{{item.newScore}}</div>
-          <div class="dutyDirectorToday overflow">{{item.difference}}</div>
-          <div class="numberOfEmployeesToday overflow">{{item.average}}</div>
+          <div class="dutyDirectorToday overflow">
+            <i class="el-icon-top" v-if="item.difference>0"></i>
+            <i class="el-icon-bottom" v-if="item.difference<0" style="color:red"></i>
+            <span
+              :class="{redColor:item.difference<0}"
+            >{{item.difference.toString().replace('-','')}}</span>
+          </div>
+          <div class="numberOfEmployeesToday overflow">
+            <i class="el-icon-top" v-if="item.average>0"></i>
+            <i class="el-icon-bottom" v-if="item.average<0" style="color:red"></i>
+            <span :class="{redColor:item.average<0}">{{item.average.toString().replace('-','')}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -55,15 +66,37 @@
 <script>
 import lineChart from '@/components/lineChart'
 import { firstData } from '@/mock'
+const categorys = [{ label: '功能定位', diff: '高', number: 0.02 }, { label: '合理用药', diff: '高', number: 0.02 }, { label: '服务流程', diff: '高', number: 0.02 }]
+const colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
+const scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+
 export default {
   components: { lineChart },
   data () {
     return {
-      list: []
+      list: [],
+      titleData: categorys,
+      colors: colors,
+      scoreData: scoreData
     }
   },
   mounted () {
     this.list = firstData
+  },
+  methods: {
+    colorStyle (item) {
+      let styleBlock = {}
+      categorys.forEach((ca, index) => {
+        if (ca === item.category) {
+          styleBlock = {
+            color: colors[index]
+          }
+          return
+        }
+
+      })
+      return styleBlock
+    }
   }
 }
 </script>
@@ -102,8 +135,10 @@ export default {
       padding-left: 10px;
       box-sizing: border-box;
       height: 90%;
-      overflow: hidden;
-
+      overflow: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       color: rgb(255, 255, 255);
       .title {
         color: #168ce3 !important;
@@ -118,6 +153,7 @@ export default {
         div {
           flex: 1;
         }
+
         .department {
           color: #168ce3;
           //flex: 1;
@@ -178,6 +214,12 @@ export default {
           color: gray;
         }
       }
+      .list-item:nth-child(even) {
+        background: #051d3f;
+      }
+      .list-item:nth-child(odd) {
+        background: #134980;
+      }
       .list-item {
         display: flex;
         // border-bottom: 1px solid gray;
@@ -189,9 +231,12 @@ export default {
         div {
           flex: 1;
           text-align: center;
+
+          .redColor {
+            color: red;
+          }
         }
         .department {
-          color: #74fbf5;
           //flex: 1;
           // height: 12.5%;
 
@@ -199,7 +244,6 @@ export default {
           font-size: 12px;
         }
         .earlyWarningMonthly {
-          color: #74fbf5;
           //flex: 1;
           // height: 12.5%;
 
@@ -207,7 +251,6 @@ export default {
           font-size: 12px;
         }
         .earlyWarningNumberToday {
-          color: #74fbf5;
           //flex: 1;
           // height: 12.5%;
 
@@ -215,7 +258,6 @@ export default {
           font-size: 12px;
         }
         .timeUpdate {
-          color: #74fbf5;
           //flex: 1;
           // height: 12.5%;
 
@@ -225,14 +267,12 @@ export default {
 
         .dutyDirectorToday {
           text-align: center;
-          color: #74fbf5;
 
           font-size: 12px;
         }
         .numberOfEmployeesToday {
           text-align: center;
           font-size: 12px;
-          color: #74fbf5;
         }
         .overflow {
           overflow: hidden;

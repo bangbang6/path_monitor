@@ -11,6 +11,7 @@ export default {
       options: {}
     }
   },
+  props:['scoreData', 'colors', 'titleData'],
   mounted () {
     this.options = {
 
@@ -89,7 +90,7 @@ export default {
           type: 'line',
           symbol: 'circle',
 
-          color: ['#2480B4'],
+          color: ['#f58220'],
           data: [7.6, 8.2, 7.4, 9.0, 8.1, 9.6]
         },
         {
@@ -105,7 +106,7 @@ export default {
           type: 'line',
           symbol: 'circle',
 
-          color: ['#1DE9B6'],
+          color: ['#ffc20e'],
           data: [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]
         }
       ]
