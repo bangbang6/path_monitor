@@ -1,6 +1,25 @@
 <template>
   <div class="men-zheng">
-    <v-chart :options="options"></v-chart>
+    <div class="chart">
+      <v-chart :options="options"></v-chart>
+    </div>
+    <div class="cards">
+      <el-card
+        v-for="(item,index) in this.titleData"
+        :key="item.label"
+        :style="cardStyle(item,index)"
+      >
+        <el-popover
+          placement="top-start"
+          width="160"
+          trigger="hover"
+          :content="`比平均值${item.diff}${item.number}`"
+        >
+          <!-- <el-button slot="reference">hover 激活</el-button> -->
+          <div slot="reference">{{item.label}}:{{item.diff}}</div>
+        </el-popover>
+      </el-card>
+    </div>
   </div>
 </template>
  
@@ -8,18 +27,43 @@
 export default {
   data () {
     return {
-      options: {}
+      options: {},
+
     }
   },
-  props:['scoreData', 'colors', 'titleData'],
+  props: ['scoreData', 'colors', 'titleData'],
+  computed: {
+    tabs () {
+      return this.titleData.map(item => item.label)
+    },
+
+
+
+  },
+  methods: {
+    cardStyle (item, index) {
+      return {
+        backgroundColor: this.colors[index]
+      }
+    }
+  },
   mounted () {
+    console.log('this.ca', this.titleData);
+    const series = this.titleData.map((item, index) => ({
+      name: item.label,
+      type: 'line',
+      symbol: 'circle',
+
+      color: this.colors[index],
+      data: this.scoreData[index]
+    }))
     this.options = {
 
       tooltip: {
         trigger: 'axis'
       },
       legend: {
-        data: ['功能定位', '质量安全', '合理用药', '服务流程'],
+        data: this.tabs,
         formatter: function (name) {
           return name
         },
@@ -76,40 +120,7 @@ export default {
         right: 20,
         bottom: 30,
       },
-      series: [
-        {
-          name: '功能定位',
-          type: 'line',
-          symbol: 'circle',
-
-          color: ['#02CDE6'],
-          data: [8.6, 7.2, 8.8, 9.4, 9.2, 9.0]
-        },
-        {
-          name: '质量安全',
-          type: 'line',
-          symbol: 'circle',
-
-          color: ['#f58220'],
-          data: [7.6, 8.2, 7.4, 9.0, 8.1, 9.6]
-        },
-        {
-          name: '合理用药',
-          type: 'line',
-          symbol: 'circle',
-
-          color: ['#1DE9B6'],
-          data: [7.8, 7.2, 8.1, 9.4, 8.6, 9.4]
-        },
-        {
-          name: '服务流程',
-          type: 'line',
-          symbol: 'circle',
-
-          color: ['#ffc20e'],
-          data: [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]
-        }
-      ]
+      series: series
     };
 
   }
@@ -120,11 +131,37 @@ export default {
 .men-zheng {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
   /* background-color: #091629; */
-
-  .echarts {
-    width: 100%;
+  .chart {
+    width: 90%;
     height: 100%;
+    .echarts {
+      width: 100%;
+      height: 100%;
+    }
   }
+  .cards {
+    width: 10%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .el-card {
+      height: 16%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}
+::v-deep .el-card__body {
+  padding: 0 !important;
+  text-align: center;
 }
 </style>

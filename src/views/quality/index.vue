@@ -1,34 +1,9 @@
 <template>
   <div class="quality">
     <div class="head">
-           <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
+      <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
 
-      <div class="average">
-        <div class="one">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高0.02">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">功能定位:高</div>
-          </el-popover>
-        </div>
-        <div class="two">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高低0.24">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">质量安全:低</div>
-          </el-popover>
-        </div>
-        <div class="three">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高0.08">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">合理用药:高</div>
-          </el-popover>
-        </div>
-        <div class="three">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值低0.12">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">服务流程:低</div>
-          </el-popover>
-        </div>
-      </div>
+     
     </div>
     <div class="main">
       <div class="list">
@@ -66,7 +41,7 @@
 <script>
 import lineChart from '@/components/lineChart'
 import { firstData } from '@/mock'
-const categorys = [{ label: '功能定位', diff: '高', number: 0.02 }, { label: '合理用药', diff: '高', number: 0.02 }, { label: '服务流程', diff: '高', number: 0.02 }]
+const categorys = [{ label: '功能定位', diff: '高', number: 0.02 }, { label: '质量安全', diff: '低', number: 0.02 }, { label: '合理用药', diff: '高', number: 0.02 }, { label: '服务流程', diff: '高', number: 0.02 }]
 const colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
 const scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
 
@@ -87,7 +62,7 @@ export default {
     colorStyle (item) {
       let styleBlock = {}
       categorys.forEach((ca, index) => {
-        if (ca === item.category) {
+        if (ca.label === item.category) {
           styleBlock = {
             color: colors[index]
           }

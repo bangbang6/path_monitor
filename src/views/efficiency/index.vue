@@ -3,32 +3,7 @@
     <div class="head">
             <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
 
-      <div class="average">
-        <div class="one">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高0.02">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">功能定位:高</div>
-          </el-popover>
-        </div>
-        <div class="two">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高低0.24">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">质量安全:低</div>
-          </el-popover>
-        </div>
-        <div class="three">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值高0.08">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">合理用药:高</div>
-          </el-popover>
-        </div>
-        <div class="three">
-          <el-popover placement="top-start" width="160" trigger="hover" content="比平均值低0.12">
-            <!-- <el-button slot="reference">hover 激活</el-button> -->
-            <div slot="reference">服务流程:低</div>
-          </el-popover>
-        </div>
-      </div>
+    
     </div>
     <div class="main">
       <div class="list">
@@ -87,7 +62,7 @@ export default {
     colorStyle (item) {
       let styleBlock = {}
       categorys.forEach((ca, index) => {
-        if (ca === item.category) {
+        if (ca.label === item.category) {
           styleBlock = {
             color: colors[index]
           }
