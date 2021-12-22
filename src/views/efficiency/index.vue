@@ -1,9 +1,7 @@
 <template>
   <div class="quality">
     <div class="head">
-            <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
-
-    
+      <line-chart :scoreData="scoreData" :titleData="titleData" :colors="colors"></line-chart>
     </div>
     <div class="main">
       <div class="list">
@@ -11,7 +9,21 @@
           <div class="department">指标分类</div>
           <div class="earlyWarningMonthly">指标名称</div>
           <div class="earlyWarningNumberToday">去年得分</div>
-          <div class="timeUpdate">今年得分</div>
+          <div class="timeUpdate">
+            今年得分
+            <span class="caret-wrapper">
+              <i
+                class="sort-caret ascending"
+                @click="sortScore('asc')"
+                :class="{active1:isActive1}"
+              ></i>
+              <i
+                class="sort-caret descending"
+                @click="sortScore('desc')"
+                :class="{active2:isActive2}"
+              ></i>
+            </span>
+          </div>
           <div class="dutyDirectorToday">得分变化</div>
           <div class="numberOfEmployeesToday">与平均值相比</div>
         </div>
@@ -71,6 +83,18 @@ export default {
 
       })
       return styleBlock
+    },
+    sortScore (type) {
+      if (type === 'asc') {
+        //正常递增顺序
+        this.list = this.list.sort((a, b) => a.newScore - b.newScore)
+        this.isActive1 = true
+        this.isActive2 = false
+      } else {
+        this.list = this.list.sort((a, b) => b.newScore - a.newScore)
+        this.isActive2 = true
+        this.isActive1 = false
+      }
     }
   }
 }
@@ -160,6 +184,38 @@ export default {
 
           text-align: center;
           font-size: 13px;
+          .caret-wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            height: 34px;
+            width: 24px;
+            vertical-align: middle;
+            cursor: pointer;
+            overflow: initial;
+            position: relative;
+            .sort-caret {
+              width: 0;
+              height: 0;
+              border: 5px solid transparent;
+              position: absolute;
+              left: 7px;
+            }
+            .ascending {
+              border-bottom-color: #c0c4cc;
+              top: 5px;
+            }
+            .descending {
+              border-top-color: #c0c4cc;
+              bottom: 7px;
+            }
+            .active1 {
+              border-bottom-color: #409eff;
+            }
+            .active2 {
+              border-top-color: #409eff;
+            }
+          }
         }
 
         .dutyDirectorToday {
@@ -238,6 +294,38 @@ export default {
 
           text-align: center;
           font-size: 12px;
+          .caret-wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            height: 34px;
+            width: 24px;
+            vertical-align: middle;
+            cursor: pointer;
+            overflow: initial;
+            position: relative;
+            .sort-caret {
+              width: 0;
+              height: 0;
+              border: 5px solid transparent;
+              position: absolute;
+              left: 7px;
+            }
+            .ascending {
+              border-bottom-color: #c0c4cc;
+              top: 5px;
+            }
+            .descending {
+              border-top-color: #c0c4cc;
+              bottom: 7px;
+            }
+            .active1 {
+              border-bottom-color: #409eff;
+            }
+            .active2 {
+              border-top-color: #409eff;
+            }
+          }
         }
 
         .dutyDirectorToday {

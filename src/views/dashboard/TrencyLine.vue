@@ -163,16 +163,26 @@ export default {
       position: absolute;
       right: 10px;
       top: 2px;
+      height: 100%;
     }
   }
   .chart {
     width: 100%;
     height: 90%;
     background: #093068c4;
+
     .echarts {
       width: 100%;
       height: 100%;
     }
   }
+}
+::v-deep .el-radio-button__inner {
+  background-color: #3e495d;
+  border: none;
+  color: #c0c4cc;
+}
+::v-deep .el-radio-button__inner {
+  border-left: none !important;
 }
 </style>

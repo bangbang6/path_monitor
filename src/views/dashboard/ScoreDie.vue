@@ -30,7 +30,8 @@ export default {
       color: ['#4992ff', '#7cffb2', '#fddd60', '#ff6e76', '#58d9f9', '#05c091', '#ff8a45', '#8d48e3', '#dd79ff'],
 
 
-      backgroundColor: '#100C2A',
+      // backgroundColor: '#100C2A',
+      backgroundColor: '#093068c4',
       tooltip: {
         trigger: 'axis',
         axisPointer: {
