@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 Vue.use(Router)
 
 /* Layout */
@@ -46,7 +45,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/dashboard1',
     children: [{
       path: 'dashboard',
       name: 'dashboard',
@@ -65,6 +64,10 @@ export const constantRoutes = [
             meta: { title: '医疗质量', icon: 'el-icon-s-help' }
           }
         ]
+  },
+  {
+    path:"/dashboard1",
+    component:() => import('@/views/dashboard1/dashboard1'),
   },
   {
     path: '/efficiency',
