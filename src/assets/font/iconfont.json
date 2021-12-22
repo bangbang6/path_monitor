@@ -1,0 +1,44 @@
+{
+  "id": "3044429",
+  "name": "path_monitor",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4060936",
+      "name": "持续发展",
+      "font_class": "chixufazhan",
+      "unicode": "e703",
+      "unicode_decimal": 59139
+    },
+    {
+      "icon_id": "10268616",
+      "name": "医疗质量分析",
+      "font_class": "yiliaozhiliangfenxi",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "11014121",
+      "name": "结算汇总分析",
+      "font_class": "jiesuanhuizongfenxi",
+      "unicode": "e7a7",
+      "unicode_decimal": 59303
+    },
+    {
+      "icon_id": "12107598",
+      "name": "运营效率",
+      "font_class": "yunyingxiaoshuai",
+      "unicode": "e847",
+      "unicode_decimal": 59463
+    },
+    {
+      "icon_id": "21501175",
+      "name": "满意度",
+      "font_class": "manyidu1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

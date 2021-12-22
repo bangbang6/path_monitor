@@ -17,6 +17,8 @@ import '@/icons' // icon
 import 'echarts'
 import VueECharts from 'vue-echarts'
 Vue.component('v-chart', VueECharts)
+import './assets/font/iconfont.css'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
