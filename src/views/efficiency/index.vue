@@ -43,7 +43,7 @@ import lineChart from '@/components/lineChart'
 import { secondData } from '@/mock'
 const categorys = [{ label: '资源效率', diff: '高', number: 0.02 }, { label: '收支结构', diff: '高', number: 0.02 }, { label: '费用控制', diff: '低', number: 0.02 }]
 const colors = ['#02CDE6', '#f58220', '#1DE9B6']
-const scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+const scoreData = [[7.5, 9.1, 8.9, 8.4, 9.3, 7.0], [9.0, 8.3, 7.8, 7.3, 7.6, 8.7], [8.5, 7.7, 8.7, 8.9, 8.3, 7.1]]
 
 export default {
   components: { lineChart },
