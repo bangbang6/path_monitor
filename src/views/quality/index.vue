@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     handleShowChart (index) {
+
       console.log('index', index);
       this.smallScoreData = [[8.6, 7.1, 8.8, 9.4, 9.2, 9.1]]
       this.smallCategorys = [{ label: this.list[index].name, diff: '高', number: 0.02 }]
