@@ -1,8 +1,12 @@
 <template>
   <div class="men-zheng">
     <div class="chart">
+      <div class="radios">
+        <radio-stage @changeStage="handleChangeStage"></radio-stage>
+      </div>
       <v-chart :options="options"></v-chart>
     </div>
+
     <div class="cards">
       <el-card
         v-for="(item,index) in this.titleData"
@@ -24,11 +28,17 @@
 </template>
  
 <script>
+import RadioStage from '@/views/dashboard/RadioStage.vue';
+
 export default {
+  components: {
+    RadioStage
+  },
   data () {
     return {
       options: {},
-
+      xAxisData: [2015, 2016, 2017, 2018, 2019, 2020],
+      newScoreData: []
     }
   },
   props: ['scoreData', 'colors', 'titleData'],
@@ -45,83 +55,123 @@ export default {
       return {
         backgroundColor: this.colors[index]
       }
-    }
-  },
-  mounted () {
-    console.log('this.ca', this.titleData);
-    const series = this.titleData.map((item, index) => ({
-      name: item.label,
-      type: 'line',
-      symbol: 'circle',
+    },
+    handleChangeStage (e) {
+      console.log('e', e);
+      // const month = moment().month() + 1
+      // const monthData = []
+      // for (let i = 1; i <= month; i++) {
+      //   monthData.push(`${i}月`)
+      // }
+      // const week = Math.ceil(moment().date() / 7)
+      // const weekData = []
+      // for (let i = 1; i <= week; i++) {
+      //   weekData.push(`第${i}周`)
+      // }
+      // const day = moment().day()
+      // const daykData = []
 
-      color: this.colors[index],
-      data: this.scoreData[index]
-    }))
-    this.options = {
+      // for (let i = day; i >= Math.min((day - 10), 1); i--) {
+      //   daykData.shift(`第${i}天`)
+      // }
+      if (e === '年') {
+        this.newScoreData = this.scoreData
+        this.xAxisData = [2015, 2016, 2017, 2018, 2019, 2020]
+      } else if (e === '月') {
+        this.newScoreData = this.scoreData
+        this.xAxisData = ['七月', '八月', '九月', '十月', '十一月', '十二月']
+      } else if (e === '周') {
+        this.newScoreData = this.scoreData
+        this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周']
+      } else if (e === '日') {
+        this.newScoreData = this.scoreData
+        this.xAxisData = ['25日', '26日', '27日', '28日', '29日', '30日']
+      }
+      this.render()
+    },
+    render () {
+      console.log('', this.titleData);
+      const series = this.titleData.map((item, index) => ({
+        name: item.label,
+        type: 'line',
+        symbol: 'circle',
 
-      tooltip: {
-        trigger: 'axis'
-      },
-      legend: {
-        data: this.tabs,
-        formatter: function (name) {
-          return name
+        color: this.colors[index],
+        data: this.newScoreData[index]
+      }))
+      console.log('series', series);
+      this.options = {
+
+        tooltip: {
+          trigger: 'axis'
         },
-        textStyle: {
-          color: 'white'
+        legend: {
+          data: this.tabs,
+          formatter: function (name) {
+            return name
+          },
+          textStyle: {
+            color: 'white'
+          },
+          top: 3,
+          show: true
         },
-        top: 3,
-        show: true
-      },
 
-      calculable: true,
+        calculable: true,
 
 
-      xAxis:
-      {
-        // axisLabel: {
-        //   rotate: 30,
-        //   interval: 0
-        // },
-        axisLine: {
-          lineStyle: {
-            color: '#CECECE'
-          }
-        },
-        axisLabel: {
-          fontSize: 12
-        },
-        type: 'category',
-        boundaryGap: false,
-        data: ['2015', '2016', '2017', '2018', '2019', '2020']
-      },
-      yAxis: [
+        xAxis:
         {
-
-          type: 'value',
+          // axisLabel: {
+          //   rotate: 30,
+          //   interval: 0
+          // },
           axisLine: {
             lineStyle: {
               color: '#CECECE'
-            },
-            show: false
+            }
           },
           axisLabel: {
             fontSize: 12
           },
-          min: function (value) {
-            return value.min - 0.5
-          }
+          type: 'category',
+          boundaryGap: false,
+          data: this.xAxisData
         },
+        yAxis: [
+          {
 
-      ],
-      grid: {
-        top: 30,
-        left: 40,
-        right: 20,
-        bottom: 30,
-      },
-      series: series
-    };
+            type: 'value',
+            axisLine: {
+              lineStyle: {
+                color: '#CECECE'
+              },
+              show: false
+            },
+            axisLabel: {
+              fontSize: 12
+            },
+            min: function (value) {
+              return value.min - 0.5
+            }
+          },
+
+        ],
+        grid: {
+          top: 30,
+          left: 40,
+          right: 20,
+          bottom: 30,
+        },
+        series: series
+      };
+    }
+  },
+  mounted () {
+    console.log('this.ca', this.titleData);
+    this.newScoreData = this.scoreData
+    console.log('this.scoreData', this.scoreData);
+    this.render()
 
   }
 }
@@ -136,12 +186,22 @@ export default {
   /* background-color: #091629; */
   .chart {
     width: 90%;
+    position: relative;
+
     height: 100%;
     .echarts {
       width: 100%;
       height: 100%;
     }
+    .radios {
+      position: absolute;
+      right: 10px;
+      top: -5px;
+      z-index: 99;
+      height: 100%;
+    }
   }
+
   .cards {
     width: 10%;
     height: 100%;
@@ -163,5 +223,13 @@ export default {
 ::v-deep .el-card__body {
   padding: 0 !important;
   text-align: center;
+}
+::v-deep .el-radio-button__inner {
+  background-color: #3e495d;
+  border: none;
+  color: #c0c4cc;
+}
+::v-deep .el-radio-button__inner {
+  border-left: none !important;
 }
 </style>

@@ -12,6 +12,9 @@
           <el-radio-button label="下降"></el-radio-button>
         </el-radio-group>
       </div>
+      <div class="radios">
+        <radio-stage @changeStage="handleChangeStage"></radio-stage>
+      </div>
     </div>
     <div class="chart">
       <v-chart :options="options"></v-chart>
@@ -20,20 +23,64 @@
 </template>
 
 <script>
+import RadioStage from './RadioStage.vue';
 export default {
+  components: { RadioStage },
   data () {
     return {
       options: {},
       typeTrency: "上升",
       categorys: [],
       colors: [],
-      scoreData: []
+      scoreData: [],
+      xAxisData: [2015, 2016, 2017, 2018, 2019, 2020],
+
 
     }
   },
 
 
   methods: {
+    handleChangeStage (e) {
+      // const month = moment().month() + 1
+      // const monthData = []
+      // for (let i = 1; i <= month; i++) {
+      //   monthData.push(`${i}月`)
+      // }
+      // const week = Math.ceil(moment().date() / 7)
+      // const weekData = []
+      // for (let i = 1; i <= week; i++) {
+      //   weekData.push(`第${i}周`)
+      // }
+      // const day = moment().day()
+      // const daykData = []
+
+      // for (let i = day; i >= Math.min((day - 10), 1); i--) {
+      //   daykData.shift(`第${i}天`)
+      // }
+      if (e === '年') {
+        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
+        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
+        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+        this.xAxisData = [2015, 2016, 2017, 2018, 2019, 2020]
+      } else if (e === '月') {
+        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
+        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
+        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+        this.xAxisData = ['七月', '八月', '九月', '十月', '十一月', '十二月']
+      } else if (e === '周') {
+        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
+        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
+        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2], [7.6, 8.2, 7.4, 9.0, 8.1], [7.8, 7.2, 8.1, 9.4, 8.6], [9.1, 8.2, 8.4, 9.4, 8.6]]
+        this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周']
+      } else if (e === '日') {
+        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
+        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
+        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+        this.xAxisData = ['25日', '26日', '27日', '28日', '29日', '30日']
+      }
+      this.render()
+    },
     handleChange (e) {
       console.log('e', e);
       this.typeTrency = e
@@ -50,6 +97,7 @@ export default {
       }
       this.render()
     },
+
     render () {
       const series = this.titleData.map((item, index) => ({
         name: item,
@@ -95,7 +143,7 @@ export default {
           },
           type: 'category',
           boundaryGap: false,
-          data: ['2015', '2016', '2017', '2018', '2019', '2020']
+          data: this.xAxisData
         },
         yAxis: [
           {
@@ -160,6 +208,12 @@ export default {
 
     background: #051d3f;
     .wrapper {
+      position: absolute;
+      left: 10px;
+      top: 2px;
+      height: 100%;
+    }
+    .radios {
       position: absolute;
       right: 10px;
       top: 2px;

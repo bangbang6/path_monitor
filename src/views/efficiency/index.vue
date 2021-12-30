@@ -44,9 +44,14 @@
             <i class="el-icon-bottom" v-if="item.average<0" style="color:red"></i>
             <span :class="{redColor:item.average<0}">{{item.average.toString().replace('-','')}}</span>
           </div>
+          <i class="el-icon-s-data" :style="{cursor:'pointer'}" @click="handleShowChart(index)"></i>
+
         </div>
       </div>
     </div>
+    <el-dialog title="各时间段分数" :visible.sync="showChart" width="80%">
+      <line-chart :titleData="smallCategorys" :scoreData="smallScoreData" :colors="colors"></line-chart>
+    </el-dialog>
   </div>
 </template>
 
@@ -64,7 +69,13 @@ export default {
       list: [],
       titleData: categorys,
       colors: colors,
-      scoreData: scoreData.slice(0, 3)
+      showChart: false,
+
+      scoreData: scoreData.slice(0, 3),
+      isActive1: false,
+      isActive2: false,
+      smallCategorys: [],
+      smallScoreData: []
     }
   },
   mounted () {
@@ -83,6 +94,12 @@ export default {
 
       })
       return styleBlock
+    },
+    handleShowChart (index) {
+      console.log('index', index);
+      this.smallScoreData = [[8.6, 7.1, 8.8, 9.4, 9.2, 9.1]]
+      this.smallCategorys = [{ label: this.list[index].name, diff: '高', number: 0.02 }]
+      this.showChart = true
     },
     sortScore (type) {
       if (type === 'asc') {
@@ -355,5 +372,15 @@ export default {
       }
     }
   }
+}
+::v-deep .el-dialog {
+  height: 65vh;
+  background: #011c47;
+}
+::v-deep .el-dialog__body {
+  height: 100%;
+}
+::v-deep .el-dialog__title {
+  color: white;
 }
 </style>
