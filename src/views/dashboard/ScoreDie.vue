@@ -55,11 +55,11 @@ export default {
       },
       yAxis: {
         type: 'category',
-        data: ['医疗质量', '运营效率', '持续发展', '满意度']
+        data: ['2021', '2020', '2019', '2018']
       },
       series: [
         {
-          name: 'firstBar',
+          name: '医疗质量',
           type: 'bar',
           stack: 'total',
           label: {
@@ -68,10 +68,10 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [320, 302, 301, 250]
+          data: [130, 150, 180, 204]
         },
         {
-          name: 'SecondBar',
+          name: '运营效率',
           type: 'bar',
           stack: 'total',
           label: {
@@ -80,10 +80,10 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [120, 132, 200]
+          data: [98,118,130,153]
         },
         {
-          name: 'ThirdBar',
+          name: '持续发展',
           type: 'bar',
           stack: 'total',
           label: {
@@ -92,10 +92,10 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [220, 182]
+          data: [54,61,69,73]
         },
         {
-          name: 'ForthBar',
+          name: '满意度',
           type: 'bar',
           stack: 'total',
           label: {
@@ -104,7 +104,7 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [150, 212]
+          data: [12,18,20,27]
         },
 
       ]
