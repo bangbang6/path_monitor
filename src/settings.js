@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '基于区块链的医疗机构监管',
 
   /**
    * @type {boolean} true | false
