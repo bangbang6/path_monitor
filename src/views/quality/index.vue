@@ -48,8 +48,8 @@
         </div>
       </div>
     </div>
-    <el-dialog title="各时间段分数" :visible.sync="showChart" width="80%">
-      <line-chart :titleData="smallCategorys" :scoreData="smallScoreData" :colors="colors"></line-chart>
+    <el-dialog title="各时间段分数" :visible.sync="showChart" width="80%" >
+      <line-chart :titleData="smallCategorys" :scoreData="smallScoreData" :colors="colors" ref='lineChart'  v-if="showChart"></line-chart>
     </el-dialog>
   </div>
 </template>
@@ -85,8 +85,9 @@ export default {
     handleShowChart (index) {
 
       console.log('index', index);
-      this.smallScoreData = [[8.6, 7.1, 8.8, 9.4, 9.2, 9.1]]
+      this.smallScoreData = this.randomMock(1)
       this.smallCategorys = [{ label: this.list[index].name, diff: '高', number: 0.02 }]
+    
       this.showChart = true
     },
     colorStyle (item) {

@@ -58,25 +58,25 @@ export default {
       // for (let i = day; i >= Math.min((day - 10), 1); i--) {
       //   daykData.shift(`第${i}天`)
       // }
-      if (e === '年') {
-        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
-        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
-        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+    if (e === '年') {
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.scoreData = mock
         this.xAxisData = [2015, 2016, 2017, 2018, 2019, 2020]
       } else if (e === '月') {
-        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
-        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
-        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.scoreData = mock
         this.xAxisData = ['七月', '八月', '九月', '十月', '十一月', '十二月']
       } else if (e === '周') {
-        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
-        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
-        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2], [7.6, 8.2, 7.4, 9.0, 8.1], [7.8, 7.2, 8.1, 9.4, 8.6], [9.1, 8.2, 8.4, 9.4, 8.6]]
-        this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周']
+       const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.scoreData = mock
+        this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周']
       } else if (e === '日') {
-        this.titleData = ['每百张病床药师人数', '收支结余', '医护比', '门诊次均费用增幅', '患者满意度']
-        this.colors = ['#02CDE6', '#f58220', '#1DE9B6', '#ffc20e']
-        this.scoreData = [[8.6, 7.2, 8.8, 9.4, 9.2, 9.0], [7.6, 8.2, 7.4, 9.0, 8.1, 9.6], [7.8, 7.2, 8.1, 9.4, 8.6, 9.4], [9.1, 8.2, 8.4, 9.4, 8.6, 8.0]]
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.scoreData = mock
         this.xAxisData = ['25日', '26日', '27日', '28日', '29日', '30日']
       }
       this.render()

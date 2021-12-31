@@ -19,6 +19,8 @@ import VueECharts from 'vue-echarts'
 Vue.component('v-chart', VueECharts)
 import './assets/font/iconfont.css'
 
+
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -31,7 +33,18 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+function mock1(){
+  console.log((Math.random()*10))
+  return (Math.random()*3+7).toFixed(1) 
+}
 
+Vue.prototype.randomMock=(length)=>{
+  let mock = []
+  for(let i = 0;i<length;i++){
+    mock.push([mock1(),mock1(),mock1(),mock1(),mock1(),mock1()])
+  }
+  return mock
+}
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明

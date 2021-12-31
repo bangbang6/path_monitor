@@ -74,17 +74,26 @@ export default {
       // for (let i = day; i >= Math.min((day - 10), 1); i--) {
       //   daykData.shift(`第${i}天`)
       // }
+      
       if (e === '年') {
-        this.newScoreData = this.scoreData
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.newScoreData = mock
         this.xAxisData = [2015, 2016, 2017, 2018, 2019, 2020]
       } else if (e === '月') {
-        this.newScoreData = this.scoreData
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.newScoreData = mock
         this.xAxisData = ['七月', '八月', '九月', '十月', '十一月', '十二月']
       } else if (e === '周') {
-        this.newScoreData = this.scoreData
+       const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.newScoreData = mock
         this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周']
       } else if (e === '日') {
-        this.newScoreData = this.scoreData
+        const length = this.scoreData.length
+        const mock = this.randomMock(length)
+        this.newScoreData = mock
         this.xAxisData = ['25日', '26日', '27日', '28日', '29日', '30日']
       }
       this.render()
