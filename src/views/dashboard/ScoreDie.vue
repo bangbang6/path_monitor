@@ -55,7 +55,7 @@ export default {
       },
       yAxis: {
         type: 'category',
-        data: ['2021', '2020', '2019', '2018']
+        data: ['2018', '2019', '2020', '2021']
       },
       series: [
         {
@@ -80,7 +80,7 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [98,118,130,153]
+          data: [98, 118, 130, 153]
         },
         {
           name: '持续发展',
@@ -92,7 +92,7 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [54,61,69,73]
+          data: [54, 61, 69, 73]
         },
         {
           name: '满意度',
@@ -104,7 +104,7 @@ export default {
           emphasis: {
             focus: 'series'
           },
-          data: [12,18,20,27]
+          data: [12, 18, 20, 27]
         },
 
       ]
