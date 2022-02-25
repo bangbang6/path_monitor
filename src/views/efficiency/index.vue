@@ -50,7 +50,7 @@
       </div>
     </div>
     <el-dialog title="各时间段分数" :visible.sync="showChart" width="80%">
-      <line-chart :titleData="smallCategorys" :scoreData="smallScoreData" :colors="colors"></line-chart>
+      <line-chart :titleData="smallCategorys" :scoreData="smallScoreData" :colors="colors" :showDepartment='true'></line-chart>
     </el-dialog>
   </div>
 </template>

@@ -1,6 +1,19 @@
 <template>
   <div class="men-zheng">
     <div class="chart">
+      <div class="radios2">
+        <el-radio-group
+          v-model="department"
+          size="mini"
+          @change="handleDepartmentStage"
+          v-if="showDepartment"
+        >
+          <el-radio-button label="外科"></el-radio-button>
+          <el-radio-button label="内科"></el-radio-button>
+          <el-radio-button label="脊柱科"></el-radio-button>
+          <el-radio-button label="内分泌科"></el-radio-button>
+        </el-radio-group>
+      </div>
       <div class="radios">
         <radio-stage @changeStage="handleChangeStage"></radio-stage>
       </div>
@@ -38,10 +51,11 @@ export default {
     return {
       options: {},
       xAxisData: [2015, 2016, 2017, 2018, 2019, 2020],
-      newScoreData: []
+      newScoreData: [],
+      department: "外科"
     }
   },
-  props: ['scoreData', 'colors', 'titleData'],
+  props: ['scoreData', 'colors', 'titleData', 'showDepartment'],
   computed: {
     tabs () {
       return this.titleData.map(item => item.label)
@@ -74,7 +88,7 @@ export default {
       // for (let i = day; i >= Math.min((day - 10), 1); i--) {
       //   daykData.shift(`第${i}天`)
       // }
-      
+
       if (e === '年') {
         const length = this.scoreData.length
         const mock = this.randomMock(length)
@@ -86,7 +100,7 @@ export default {
         this.newScoreData = mock
         this.xAxisData = ['七月', '八月', '九月', '十月', '十一月', '十二月']
       } else if (e === '周') {
-       const length = this.scoreData.length
+        const length = this.scoreData.length
         const mock = this.randomMock(length)
         this.newScoreData = mock
         this.xAxisData = ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周']
@@ -97,6 +111,13 @@ export default {
         this.xAxisData = ['25日', '26日', '27日', '28日', '29日', '30日']
       }
       this.render()
+    },
+    handleDepartmentStage (e) {
+      const length = this.scoreData.length
+      const mock = this.randomMock(length)
+      this.newScoreData = mock
+      this.render()
+
     },
     render () {
       console.log('', this.titleData);
@@ -206,6 +227,13 @@ export default {
       position: absolute;
       right: 10px;
       top: -5px;
+      z-index: 99;
+      height: 100%;
+    }
+    .radios2 {
+      position: absolute;
+      left: 10px;
+      top: -8px;
       z-index: 99;
       height: 100%;
     }
