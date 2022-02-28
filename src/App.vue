@@ -24,4 +24,7 @@ export default {
   background-size: 0.15rem 0.9rem, 0.9rem 0.15rem, 0.15rem 0.9rem,
     0.9rem 0.15rem;
 }
+.bold{
+  font-weight: bold;
+}
 </style>

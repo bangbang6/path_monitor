@@ -3,36 +3,32 @@
     <div class="title">
       <span>></span>
       <span class="light" style="margin-right: 5px;color: #237dbf">></span>
-      全国医院综合排名
+      全国医院健康豆及异常情况
       <span class="light" style="margin-left: 5px;color: #237dbf">&nbsp<</span>
       <span><</span>
     </div>
     <div class="main">
       <div class="list">
         <div class="item">
-          <div class=" rank white" style="color: white; font-size: 16px">No</div>
-          <div class=" name white" style="color: white;font-size: 16px">医院名称</div>
-          <div class="white quality" style="color: white;font-size: 16px">医疗质量</div>
-          <div class="white efficiency" style="color: white;font-size: 16px">运营效率</div>
-          <div class="white develop" style="color: white;font-size: 16px">持续发展</div>
-          <div class="white satisfy" style="color: white;font-size: 16px">满意度</div>
+          <div class="name blue" style="color: white;font-size: 16px">区域名</div>
+          <div class="quality blue" style="color: white;font-size: 16px">健康豆</div>
+          <div class="efficiency blue" style="color: white;font-size: 16px">异常数</div>
+          <div class="develop blue" style="color: white;font-size: 16px">预警说明</div>
         </div>
         <div
           class="item"
           v-for="(item,index) in hospitals"
-          :class="{wei:index%2==0,lig:index%2!=0}"
-          :key="item.rank"
+          :class="{wei:index%2==0,lig:index%2!=0,red:index===colorindex}"
+          :key="item.area"
         >
-          <div class="rank">{{item.rank}}</div>
-          <div class="name" @click="hanleClick(item.name)">{{item.name}}</div>
-          <div class="quality">{{item.quality}}</div>
-          <div class="efficiency">{{item.efficiency}}</div>
-          <div class="develop">{{item.develop}}</div>
-          <div class="satisfy">{{item.satisfy}}</div>
+          <div class="name green" @click="hanleClick(item.name)">{{item.area}}</div>
+          <div class="quality green">{{item.count}}</div>
+          <div class="efficiency green">{{item.errorNumber}}</div>
+          <div class="develop green">{{item.info}}</div>
         </div>
       </div>
       <div class="map">
-        <order-map />
+        <order-map :area="area" />
       </div>
     </div>
   </div>
@@ -47,18 +43,20 @@ export default {
   data () {
 
     return {
-
+      colorindex: 0,
+      area: "北京",
       hospitals: [
 
-        { rank: 1, name: "医院A", quality: 98.23, efficiency: 96.62, develop: 92.01, satisfy: 90.01},
-        { rank: 2, name: "医院B", quality: 95.38, efficiency: 98.06, develop: 92.20,satisfy: 88.18 },
-        { rank: 3, name: "医院C", quality: 90.63, efficiency: 87.56, develop: 87.73, satisfy: 86.83 },
-        { rank: 4, name: "医院D", quality: 90.12, efficiency: 88.10, develop: 84.12, satisfy: 85.14},
-        { rank: 5, name: "医院E", quality: 85.52, efficiency: 84.06, develop: 80.21, satisfy: 85.01 },
-        { rank: 6, name: "医院F", quality: 86.74, efficiency: 80.62, develop: 78.19, satisfy: 84.98 },
-        { rank: 7, name: "医院G", quality: 84.89, efficiency: 75.52, develop: 76.18, satisfy: 84.62 },
-        { rank: 8, name: "医院H", quality: 80.63, efficiency: 74.71, develop: 73.20, satisfy: 83.98 },
-        { rank: 9, name: "医院I", quality: 80.18, efficiency: 73.93, develop: 72.83, satisfy: 83.91 },
+        { area: "北京", count: 460, errorNumber: 232, info: "异常数较多" },
+        { area: "天津", count: 452, errorNumber: 152, info: "流感患者增加80%" },
+        { area: "武汉", count: 328, errorNumber: 166, info: "慢性病增加26%" },
+        { area: "上海", count: 689, errorNumber: 142, info: "无" },
+        { area: "安阳", count: 489, errorNumber: 98, info: "无" },
+        { area: "金华", count: 456, errorNumber: 74, info: "无" },
+        { area: "吉林", count: 451, errorNumber: 93, info: "无" },
+        { area: "西安", count: 356, errorNumber: 89, info: "无" },
+        { area: "湘潭", count: 342, errorNumber: 84, info: "无" },
+
       ]
     }
   },
@@ -71,6 +69,16 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    let i = 0
+    setInterval(() => {
+      this.colorindex = i
+
+      this.area = this.hospitals[i].area
+      i = (i + 1) % 3
+
+    }, 3000)
   }
 }
 </script>
@@ -107,7 +115,7 @@ export default {
       padding: 5px;
       padding-top: 20px;
       box-sizing: border-box;
-      width: 45%;
+      width: 35%;
       .item {
         display: flex;
         //align-items: center;
@@ -116,6 +124,7 @@ export default {
         padding-top: 2px;
         padding-bottom: 2px;
         box-sizing: border-box;
+        color: white;
         div {
           text-align: center;
           transform: scale(0.8);
@@ -124,48 +133,47 @@ export default {
           color: 'white' !important;
           font-size: 12px;
         }
-        .rank {
-          flex: 8%;
-          color: rgb(13, 243, 243);
-          transform: scale(0.8);
-          margin: auto;
-        }
+
         .name {
           flex: 20%;
-          color: white;
-          transform: scale(0.8);
           margin: auto;
+          transform: scale(0.8);
         }
         .quality {
-          color: #1591f0;
           flex: 18%;
           transform: scale(0.8);
           margin: auto;
         }
         .efficiency {
-          color: #facc14;
           transform: scale(0.8);
           flex: 18%;
           margin: auto;
         }
         .develop {
-          flex: 18%;
+          flex: 22%;
           transform: scale(0.8);
-          color: #1591f0;
           margin: auto;
-        }
-        .satisfy {
-          flex: 18%;
-          transform: scale(0.8);
-          color: #facc14;
-          margin: auto;
+          font-size: 14px;
         }
       }
     }
     .map {
-      width: 55%;
+      width: 65%;
       height: 100%;
+      padding-left: 20px;
+      box-sizing: border-box;
     }
+  }
+}
+.blue {
+  color: #168ce3 !important;
+}
+.green {
+  color: #74fbf5;
+}
+.red {
+  div {
+    color: #ec3333 !important;
   }
 }
 </style>

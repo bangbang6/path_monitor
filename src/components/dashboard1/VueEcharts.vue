@@ -10,18 +10,22 @@ export default {
     options: Object,
     theme: [String, Object]
   },
+  watch: {
+    options: function () {
+      this.chart && this.chart.setOption(this.options)
+    }
+  },
   data () {
     return {}
   },
   mounted () {
-    let chart
     let dom
-    if (!chart) {
+    if (!this.chart) {
       dom = this.$refs.map
-      chart = Echarts.init(dom, this.theme)
+      this.chart = Echarts.init(dom, this.theme)
     }
     if (this.options) {
-      chart.setOption(this.options)
+      this.chart.setOption(this.options)
     }
   }
 }

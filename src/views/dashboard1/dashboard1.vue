@@ -32,10 +32,10 @@
       </div>
       <div class="right">
         <div class="keyword">
-          <keyword-people />
+          <hospital-rank />
         </div>
         <div class="visit">
-          <visit-home />
+          <keyword-people />
         </div>
       </div>
     </div>
@@ -51,6 +51,7 @@ import VisitHome from '@/components/dashboard1/visitHome.vue'
 import KeywordPeople from '@/components/dashboard1/keywordPeople.vue'
 import totalRate from '@/components/dashboard1/totalRate.vue'
 import ChinaMap from '@/components/dashboard1/chinaMap.vue'
+import HospitalRank from '@/components/dashboard1/HospitalRank.vue'
 
 export default {
   components: {
@@ -60,7 +61,8 @@ export default {
     VisitHome,
     KeywordPeople,
     ChinaMap,
-    totalRate
+    totalRate,
+    HospitalRank
   },
   data () {
 

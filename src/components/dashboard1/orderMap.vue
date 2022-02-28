@@ -75,18 +75,27 @@ import VueEcharts from './VueEcharts.vue'
 
 // }
 const geoCoordMap = {
-  '医院A': [116.36001, 39.982728],
-  '医院B': [116.380745, 39.931911],
-  '医院C': [108.936741, 34.219569],
-  '医院D': [110.287723, 20.004822],
-  '医院E': [114.259913, 30.579561]
+  '北京': [116.322056, 39.89491],
+  '天津': [117.201509, 39.085318],
+  "武汉": [114.304569, 30.593354],
+  '上海': [121.473667, 31.230525],
+  '安阳': [114.39248, 36.098779],
+  '金华': [119.647265, 29.079195],
+  '吉林': [126.549719, 43.838132],
+  '西安': [108.939645, 34.343207],
+  '湘潭': [112.945439, 27.83136],
 }
 const d1 = {
-  '医院A': 1124,
-  '医院B': 11620,
-  '医院C': 10041,
-  '医院D': 8903,
-  '医院E': 7800
+  '北京': 11240,
+  '天津': 11620,
+  '武汉': 10620,
+  '上海': 10041,
+  '安阳': 8903,
+  '金华': 7800,
+  '吉林': 6800,
+  '金华': 4800,
+  '西安': 6500,
+  '湘潭': 4500,
 }
 const colors = [
   ['#1DE9B6', '#1DE9B6', '#FFDB5C', '#FFDB5C', '#04B9FF', '#04B9FF'],
@@ -94,7 +103,7 @@ const colors = [
   ['#37A2DA', '#67E0E3', '#32C5E9', '#9FE6B8', '#FFDB5C', '#FF9F7F', '#FB7293', '#E062AE', '#E690D1', '#E7BCF3', '#9D96F5', '#8378EA', '#8378EA'],
   ['#DD6B66', '#759AA0', '#E69D87', '#8DC1A9', '#EA7E53', '#EEDD78', '#73A373', '#73B9BC', '#7289AB', '#91CA8C', '#F49F42']
 ]
-const citys = ['北京', '上海', '广东', '长沙', '江西', '湖北']
+const citys = ['北京', '天津', "武汉", '上海', '安阳', '金华', '吉林', '西安', '湘潭']
 export default {
   data () {
     return {
@@ -106,9 +115,115 @@ export default {
       ]
     }
   },
+  props: {
+    area: String
+  },
   components: { VueEcharts },
   mounted () {
     this.getData()
+  },
+  watch: {
+    area: function () {
+      const that = this
+      const _options = {
+        baseOption: {
+
+          geo: { //geo表示自定义
+            map: 'china',
+            zoom: 1.2,
+            roam: true,//可交互
+            scaleLimit: {
+              min: 0.5,
+              max: 3
+            },//放大缩小比例
+            center: [107.83531246, 34.0267395887],
+            itemStyle: { //每一块元素
+              normal: {
+                borderColor: 'rgba(147, 235, 248, 1)',
+                borderWidth: 1,
+
+                areaColor: {
+                  type: 'radial',
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.8,
+                  colorStops: [{
+                    offset: 0, color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: 'rgba(147, 235, 248, 0.2)' // 100% 处的颜色
+                  }],
+                  global: false // 缺省为 false
+                },
+                shadowColor: 'rgba(128,217,248,1)',
+                shadowOffsetX: -2,
+                shadowOffsetY: 2,
+                shadowBlur: 10
+              },
+              emphasis: {
+                areaColor: '#389BB7',
+                borderWidth: 0,
+
+              }
+
+            },
+            label: { //标签显示
+              emphasis: {
+                show: false
+              }
+            }
+          }
+        },
+
+      }
+
+      that.options = _options
+      that.loading = false
+      that.littleDotData = that.initDot()
+
+      that.options.baseOption = {
+        ...that.options.baseOption,
+        series: [{
+          type: 'effectScatter',
+          coordinateSystem: 'geo',
+          data: that.littleDotData,
+          symbolSize: function (val) {
+            return val[2] / 1000
+          },
+
+          rippleEffect: {
+
+            brushType: "stroke", //涟漪
+          },
+          hoverAnimation: true,//移上去有动画
+          label: {
+            normal: {
+              show: true,
+              position: 'right',
+              formatter (params) {
+                return params.data.name
+              }
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: function (data) {
+                console.log('that.area', that.area);
+                console.log('that.name', data.name);
+                if (that.area === data.name) return '#ec3333'
+                else return '#74fbf5'
+              },/* colors[0][0], */
+              shodowColor: function (data) {
+                if (that.area === data.name) return '#ec3333'
+                else return '#74fbf5'
+              }
+            }
+          }
+        }]
+
+      }
+
+    }
+
   },
   methods: {
     getData () {
@@ -122,7 +237,7 @@ export default {
 
             geo: { //geo表示自定义
               map: 'china',
-              zoom: 1.1,
+              zoom: 1.2,
               roam: true,//可交互
               scaleLimit: {
                 min: 0.5,
@@ -168,21 +283,6 @@ export default {
 
         }
 
-        /* _options.options.push({
-          backgroundColor: 'rgb(48, 48, 48)',
-          xAxis: {
-            type: 'value'
-          },
-          yAxis: {
-            type: 'category',
-            data: citys
-          },
-          series: [{
-            type: 'bar',
-            data: [0, 0, 0.5, 0.8, 0.9, 1.3, 1.5, 5]
-          }]
-        }) */
-
         that.options = _options
         that.loading = false
         that.littleDotData = that.initDot()
@@ -213,8 +313,14 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#74fbf5',/* colors[0][0], */
-                shodowColor: '#74fbf5' /* colors[0][0] */
+                color: function (data) {
+                  if (that.area === data.name) return '#ec3333'
+                  else return '#74fbf5'
+                },/* colors[0][0], */
+                shodowColor: function (data) {
+                  if (that.area === data.name) return '#ec3333'
+                  else return '#74fbf5'
+                }
               }
             }
           }]
